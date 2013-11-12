@@ -202,6 +202,10 @@ object ProcessSpec extends Properties("Process1") {
     s.chunkBy2(_ > _).toList == List(Vector(3), Vector(5, 4, 3, 1), Vector(2), Vector(6))
   }
 
+  property("unchunk") = forAll { l: List[List[Int]] =>
+    emitAll(l).unchunk.toList === l.flatten
+  }
+
   implicit def arbVec[A:Arbitrary]: Arbitrary[IndexedSeq[A]] =
     Arbitrary(Gen.listOf(arbitrary[A]).map(_.toIndexedSeq))
 

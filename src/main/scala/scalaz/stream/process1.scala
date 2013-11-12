@@ -80,6 +80,10 @@ trait process1 {
     await1[I].flatMap(i => go(Vector(i), i))
   }
 
+  /** Turns a chunked stream into a stream of individual elements. */
+  def unchunk[I]: Process1[Seq[I], I] =
+    await1[Seq[I]].flatMap(emitAll).repeat
+
   /**
    * Like `collect` on scala collection. 
    * Builds a new process by applying a partial function 

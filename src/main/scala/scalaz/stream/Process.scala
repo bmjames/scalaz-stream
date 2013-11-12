@@ -1579,6 +1579,11 @@ object Process {
       process1.feed1(i)(self)
   }
 
+  implicit class ChunkedProcess1Syntax[I, O](self: Process1[I, Seq[O]]) {
+    /** Alias for `self |> process1.unchunk` */
+    def unchunk: Process1[I, O] = self |> process1.unchunk
+  }
+
   /**
    * This class provides infix syntax specific to `Tee`. We put these here
    * rather than trying to cram them into `Process` itself using implicit
