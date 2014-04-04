@@ -1175,6 +1175,13 @@ object Process {
     }
   }
 
+  /** Syntax for chunked processes. */
+  implicit class ChunkedProcessSyntax[F[_],O](self: Process[F,Seq[O]]) {
+    /** Alias for `self |> process1.dechunk[O]` */
+    def dechunk: Process[F, O] =
+      self |> process1.dechunk[O]
+  }
+
   /**
    * Infix syntax for working with `Writer[F,W,O]`. We call
    * the `W` parameter the 'write' side of the `Writer` and

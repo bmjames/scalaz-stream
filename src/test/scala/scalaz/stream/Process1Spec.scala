@@ -146,6 +146,10 @@ object Process1Spec extends Properties("process1") {
     s.chunkBy2(_ > _).toList === List(Vector(3), Vector(5, 4, 3, 1), Vector(2), Vector(6))
   }
 
+  property("dechunk") = forAll { pi: Process0[List[Int]] =>
+    pi.dechunk.toList == pi.toList.flatten
+  }
+
   property("last") = secure {
     var i = 0
     Process.range(0, 10).last.map(_ => i += 1).runLog.run
